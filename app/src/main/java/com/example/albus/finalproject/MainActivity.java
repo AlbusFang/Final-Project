@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.json.JSONObject;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.*;
+
 
 
 
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    /*JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
             Request.Method.GET,
             "",
             null,
@@ -34,5 +37,5 @@ public class MainActivity extends AppCompatActivity {
         public void onErrorResponse(final VolleyError error) {
             Log.w(TAG, error.toString());
         }
-    });*/
+    });
 }
