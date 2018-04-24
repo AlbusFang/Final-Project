@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Make Call");
                 makeAPICall(category);
                 setContentView(R.layout.question_page);
+                final Button answer_1 = findViewById(R.id.answer_1);
+                answer_1.setText("Correct Answer :D");
 
             }
 

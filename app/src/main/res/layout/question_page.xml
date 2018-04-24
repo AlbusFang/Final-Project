@@ -18,8 +18,7 @@
             android:text="Question"
             android:textColor="@android:color/white"
             android:textSize="22sp"
-            android:textStyle="bold"
-            tools:text="Question View" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/answer_1"
