@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Final project</string>
     <string-array name="Choose_Categories">
         <item>Choose Your Category</item>
         <item>Miscellaneous</item>

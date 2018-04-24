@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 category = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "Category set to " + category);
             }
 
             @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 Log.d(TAG, "Make Call");
+                setContentView(R.layout.question_page);
   //              makeAPICall("none");
 
             }
