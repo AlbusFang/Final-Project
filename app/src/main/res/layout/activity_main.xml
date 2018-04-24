@@ -11,56 +11,59 @@
 
     <Button
         android:id="@+id/rules"
+        style="@android:style/Widget.Button.Toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="27dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="148dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="148dp"
         android:layout_marginTop="8dp"
         android:text="Rules"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintVertical_bias="0.018" />
 
     <Spinner
         android:id="@+id/ChooseCategories"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="63dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:drawable/alert_light_frame"
         android:entries="@array/Choose_Categories"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.293" />
+        app:layout_constraintVertical_bias="0.344" />
 
     <Button
         android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="54dp"
+        style="@android:style/Widget.Button.Toggle"
+        android:layout_width="242dp"
+        android:layout_height="59dp"
         android:layout_marginBottom="124dp"
-        android:layout_marginEnd="124dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="124dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Start Game"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.863" />
+        app:layout_constraintVertical_bias="0.921" />
 </android.support.constraint.ConstraintLayout>

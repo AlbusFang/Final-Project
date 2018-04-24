@@ -23,7 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-//import com.google.JsonParser;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -67,15 +67,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
-
     }
-
 
     /**
      * makes an api call, triggering the beginning of the game.
-     *
      * @param category sets the category of questions
      */
     public static void makeAPICall(String category) {
@@ -88,11 +83,9 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(final JSONObject response) {
-                                Log.d(TAG, "Request Received: " + response.toString());
-                                Question[] questions = getQuestions(response);
-                                //makeQuestionPage(questions);
-
-
+                               Log.d(TAG, "Request Received:"+ response.toString());
+                               Question[] questions = getQuestions(response);
+                               //makeQuestionPage(questions);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -137,6 +130,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private static Question[] getQuestions(JSONObject response) {
         Question[] questions = new Question[10];
+
+    /**
+     * reads and parses the return json, creating question objects for all received questions
+     * @param response the json received from api call
+     * @return an array of question objects
+     */
+    private static Question[] getQuestions(JSONObject response) {
+        Question[] questions = new Question[10];
         try {
             JSONArray result = response.getJSONArray("results");
             for (int index = 0; index < questions.length; index++) {
@@ -162,7 +163,13 @@ public class MainActivity extends AppCompatActivity {
      * @param questions an array of question objects
      */
     private static void makeQuestionPage(final Question[] questions) {
+    }
 
+    /**
+     * tbd.
+     * @param questions an array of question objects
+     */
+    private static void makeQuestionPage(final Question[] questions) {
 
     }
 }
