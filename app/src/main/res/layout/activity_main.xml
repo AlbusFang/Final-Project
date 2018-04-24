@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:visibility="visible"
     tools:context=".MainActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <Button
         android:id="@+id/categories"
+        style="@android:style/Widget.Material.Button"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -17,13 +19,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="Choose a Category..."
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="100dp" />
+        tools:layout_editor_absoluteY="99dp" />
 
     <Button
         android:id="@+id/start"
-        android:layout_width="276dp"
+        style="@android:style/Widget.Material.Button"
+        android:layout_width="298dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
@@ -46,9 +50,12 @@
 
     <Spinner
         android:id="@+id/spinner2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="109dp" />
+        android:layout_width="291dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:dropDownWidth="match_parent"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/categories"
+        app:layout_constraintTop_toTopOf="@+id/categories" />
 
 </android.support.constraint.ConstraintLayout>
