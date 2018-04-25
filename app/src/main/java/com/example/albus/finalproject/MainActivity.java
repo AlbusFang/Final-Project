@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.net.URLDecoder;
+import java.util.Random;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static RequestQueue requestQueue;
     private static String category = "none";
+    private static Question[] questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
 
-        final Spinner spinner = (Spinner) findViewById(R.id.ChooseCategories);
+        final Spinner spinner = findViewById(R.id.ChooseCategories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Choose_Categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -60,12 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 Log.d(TAG, "Make Call");
                 makeAPICall(category);
-                setContentView(R.layout.question_page);
-                final Button answer_1 = findViewById(R.id.answer_1);
-                answer_1.setText("Correct Answer :D");
-
             }
-
         });
     }
 
@@ -73,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
      * makes an api call, triggering the beginning of the game.
      * @param category sets the category of questions
      */
-    public static void makeAPICall(String category) {
-        if (category.equals("none")) {
+    public void makeAPICall(String category) {
+        if (category.equals("none") || category.equalsIgnoreCase("Choose your Category")) {
             try {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                         Request.Method.GET,
@@ -84,8 +81,27 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(final JSONObject response) {
                                Log.d(TAG, "Request Received:"+ response.toString());
-                               Question[] questions = getQuestions(response);
-                               //makeQuestionPage(questions);
+                               questions = getQuestions(response);
+                               //Log.d(TAG, questions[0].getQuestion());
+                               setContentView(R.layout.question_page);
+                               final TextView question = findViewById(R.id.question_view);
+                               question.setText(questions[0].getQuestion());
+                               Log.d(TAG, questions[0].getAnswers().toString());
+                               String[] answers = questions[0].shuffleAnswers();
+                               final Button answer1 = findViewById(R.id.answer_1);
+                               answer1.setText(answers[0]);
+                               final Button answer2 = findViewById(R.id.answer_2);
+                               answer2.setText(answers[1]);
+                               final Button answer3 = findViewById(R.id.answer_3);
+                               answer3.setText(answers[2]);
+                               final Button answer4 = findViewById(R.id.answer_4);
+                               answer4.setText(answers[3]);
+
+
+
+
+
+                               //Log.d(TAG, "Random: " + num);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -106,7 +122,21 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(final JSONObject response) {
-                                Log.d(TAG, response.toString());
+                                Log.d(TAG, "Response Received: " + response.toString());
+                                questions = getQuestions(response);
+                                setContentView(R.layout.question_page);
+                                final TextView question = findViewById(R.id.question_view);
+                                question.setText(questions[0].getQuestion());
+                                //Log.d(TAG, questions[0].getAnswers().toString());
+                                String[] answers = questions[0].shuffleAnswers();
+                                final Button answer1 = findViewById(R.id.answer_1);
+                                answer1.setText(answers[0]);
+                                final Button answer2 = findViewById(R.id.answer_2);
+                                answer2.setText(answers[1]);
+                                final Button answer3 = findViewById(R.id.answer_3);
+                                answer3.setText(answers[2]);
+                                final Button answer4 = findViewById(R.id.answer_4);
+                                answer4.setText(answers[3]);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -120,17 +150,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
-    /**
-     * reads and parses the return json, creating question objects for all received questions
-     *
-     * @param response the json received from api call
-     * @return an array of question objects
-     */
-    private static Question[] getQuestions(JSONObject response) {
-        Question[] questions = new Question[10];
-
     /**
      * reads and parses the return json, creating question objects for all received questions
      * @param response the json received from api call
@@ -141,35 +160,21 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONArray result = response.getJSONArray("results");
             for (int index = 0; index < questions.length; index++) {
-                String q = result.getJSONObject(index).get("question").toString();
-                q = URLDecoder.decode(q);
+                String question = result.getJSONObject(index).get("question").toString();
+                question = URLDecoder.decode(question);
                 String correct_answer = result.getJSONObject(index).get("correct_answer").toString();
-                String[] incorrect_answers = new String[3];
-                for (int j = 0; j < incorrect_answers.length; j++) {
-                    incorrect_answers[j] = result.getJSONObject(index).getJSONArray("incorrect_answers").get(j).toString();
+                correct_answer = URLDecoder.decode(correct_answer);
+                String[] answers = new String[4];
+                answers[0] = correct_answer;
+                for (int j = 1; j < answers.length; j++) {
+                    answers[j] = result.getJSONObject(index).getJSONArray("incorrect_answers").get(j - 1).toString();
+                    answers[j] = URLDecoder.decode(answers[j]);
                 }
-                questions[index] = new Question(q, correct_answer, incorrect_answers);
+                questions[index] = new Question(question, correct_answer, answers);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return questions;
-    }
-
-
-    /**
-     * tbd.
-     *
-     * @param questions an array of question objects
-     */
-    private static void makeQuestionPage(final Question[] questions) {
-    }
-
-    /**
-     * tbd.
-     * @param questions an array of question objects
-     */
-    private static void makeQuestionPage(final Question[] questions) {
-
     }
 }
