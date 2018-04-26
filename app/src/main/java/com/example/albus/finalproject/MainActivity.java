@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
         final TextView highScoreView = findViewById(R.id.highScoreTextView);
         highScoreView.setText("" + highScore);
 
+        final Button rules = findViewById(R.id.rules);
+        rules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,Pop.class));
+            }
+        });
         final Spinner spinner = findViewById(R.id.ChooseCategories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Choose_Categories, android.R.layout.simple_spinner_item);
@@ -68,13 +75,11 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(TAG, "Nothing selected");
             }
         });
-
         final Button startGame = findViewById(R.id.start);
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,19 +99,27 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                         Request.Method.GET,
-                        "https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple&encode=url3986&category=" + category,
+                        "https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986&category=" + category,
                         null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(final JSONObject response) {
                                Log.d(TAG, "Request Received:"+ response.toString());
-                                //create class objects for every question in response
-                               questions = getQuestions(response);
+                               try {
+                                   if (response.getInt("response_code") != 0) {
+                                       throw(new Exception("Results Empty, shutting down."));
+                                   } else {
+                                       //create class objects for every question in response
+                                       questions = getQuestions(response);
 
-                               //Start the question page activity.
-                                Intent questionPageIntent = new Intent(getApplicationContext(),
-                                        QuestionPageActivity.class);
-                                startActivity(questionPageIntent);
+                                       //Start the question page activity.
+                                       Intent questionPageIntent = new Intent(getApplicationContext(),
+                                               QuestionPageActivity.class);
+                                       startActivity(questionPageIntent);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -162,16 +175,16 @@ public class MainActivity extends AppCompatActivity {
      */
     private static void buildMap() {
         categories.put("General Knowledge",9);
-        categories.put("Entertainment: Books",11);
+        categories.put("Entertainment: Books",10);
+        categories.put("Entertainment: Film", 11);
         categories.put("Entertainment: Music",12);
-        categories.put("Science: Computer",18);
-        categories.put("Science: Math",19);
-        categories.put("Vehicle",28);
         categories.put("Entertainment: Musicals and Theatres", 13);
         categories.put("Entertainment: Television", 14);
         categories.put("Entertainment: Video Games", 15);
         categories.put("Entertainment: Board Games", 16);
         categories.put("Science and Nature", 17);
+        categories.put("Science: Computer",18);
+        categories.put("Science: Math",19);
         categories.put("Mythology", 20);
         categories.put("Sports", 21);
         categories.put("Geography", 22);
@@ -180,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         categories.put("Art", 25);
         categories.put("Celebrities", 26);
         categories.put("Animals", 27);
+        categories.put("Vehicle",28);
         categories.put("Entertainment: Comics", 29);
         categories.put("Science: Gadgets", 30);
         categories.put("Entertainment: Japanese Anime and Manga", 31);

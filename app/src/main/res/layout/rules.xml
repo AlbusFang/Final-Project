@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rules"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_dark"
+    android:visibility="visible">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="186dp"
+        android:layout_centerInParent="true"
+        android:background="@android:color/holo_orange_dark"
+        android:contentDescription="Rules: Users choose the\ntype of question they want\nto answer first and then hit start.\nIf the user get the question wrong,\nshe will get one point. "
+        android:ems="10"
+        android:inputType="textLongMessage"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        android:text=""
+        tools:text="Rules: Users choose the\ntype of question they want to answer first and then hit start. If the user get the question wrong, she will get one point. " />
+</RelativeLayout>
