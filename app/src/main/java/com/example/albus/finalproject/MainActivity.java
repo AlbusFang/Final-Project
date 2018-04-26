@@ -3,6 +3,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.JsonReader;
 import android.util.Log;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static RequestQueue requestQueue;
     private static Hashtable<String,Integer> categories = new Hashtable<>(); //maps category strings to their ids
     private static int category; //we need the category to be the matching id number
-    private static Question[] questions;
+    public static Question[] questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,25 +98,10 @@ public class MainActivity extends AppCompatActivity {
                                 //create class objects for every question in response
                                questions = getQuestions(response);
 
-                               setContentView(R.layout.question_page);
-
-                               final TextView question = findViewById(R.id.question_view);
-                               question.setText(questions[0].getQuestion());
-                                //randomly shuffle answer array so every answer is a different letter
-                               String[] answers = questions[0].shuffleAnswers();
-
-                               final Button answer1 = findViewById(R.id.answer_1);
-                               answer1.setText(answers[0]);
-
-                               final Button answer2 = findViewById(R.id.answer_2);
-                               answer2.setText(answers[1]);
-
-                               final Button answer3 = findViewById(R.id.answer_3);
-                               answer3.setText(answers[2]);
-
-                               final Button answer4 = findViewById(R.id.answer_4);
-                               answer4.setText(answers[3]);
-
+                               //Start the question page activity.
+                                Intent questionPageIntent = new Intent(getApplicationContext(),
+                                        QuestionPageActivity.class);
+                                startActivity(questionPageIntent);
                             }
                         }, new Response.ErrorListener() {
                     @Override
