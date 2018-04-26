@@ -90,14 +90,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(final JSONObject response) {
                                Log.d(TAG, "Request Received:"+ response.toString());
-
+                                //create class objects for every question in response
                                questions = getQuestions(response);
 
                                setContentView(R.layout.question_page);
 
                                final TextView question = findViewById(R.id.question_view);
                                question.setText(questions[0].getQuestion());
-
+                                //randomly shuffle answer array so every answer is a different letter
                                String[] answers = questions[0].shuffleAnswers();
 
                                final Button answer1 = findViewById(R.id.answer_1);
@@ -133,18 +133,27 @@ public class MainActivity extends AppCompatActivity {
         Question[] questions = new Question[10];
         try {
             JSONArray result = response.getJSONArray("results");
-            for (int index = 0; index < questions.length; index++) {
-                String question = result.getJSONObject(index).get("question").toString();
+            for (int i = 0; i < questions.length; i++) {
+                //parse and decode each question and the respective answers
+                String question = result.getJSONObject(i).get("question").toString();
                 question = URLDecoder.decode(question);
-                String correct_answer = result.getJSONObject(index).get("correct_answer").toString();
+
+                String correct_answer = result.getJSONObject(i).get("correct_answer").toString();
                 correct_answer = URLDecoder.decode(correct_answer);
+
+                //put each answer, including the correct answer, into an array
                 String[] answers = new String[4];
                 answers[0] = correct_answer;
+
                 for (int j = 1; j < answers.length; j++) {
-                    answers[j] = result.getJSONObject(index).getJSONArray("incorrect_answers").get(j - 1).toString();
-                    answers[j] = URLDecoder.decode(answers[j]);
+
+                    answers[j] = result.getJSONObject(i).getJSONArray("incorrect_answers").get(j - 1).toString();
+                    answers[j] = URLDecoder.decode(answers[j]);  //i could do this in one line but this
+                                                                // looks so much easier to read
+
                 }
-                questions[index] = new Question(question, correct_answer, answers);
+                //create an instance of question for every individual question
+                questions[i] = new Question(question, correct_answer, answers);
             }
         } catch (Exception e) {
             e.printStackTrace();
