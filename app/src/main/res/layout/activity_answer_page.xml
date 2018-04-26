@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnswerPageActivity"
+    android:background="@color/colorPrimary">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="232dp">
+
+        <ImageView
+            android:id="@+id/answerImage"
+            android:layout_width="219dp"
+            android:layout_height="191dp"
+            android:layout_gravity="center"
+            tools:layout_editor_absoluteX="192dp"
+            tools:layout_editor_absoluteY="101dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="386dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/FrameLayout">
+
+        <TextView
+            android:id="@+id/TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="You got it"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="128dp"
+            tools:layout_editor_absoluteY="211dp"
+            tools:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/answerValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            tools:layout_editor_absoluteX="154dp"
+            tools:layout_editor_absoluteY="271dp"
+            tools:text="--------" />
+
+        <Button
+            android:id="@+id/returnToMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return to Main Page"
+            tools:layout_editor_absoluteX="103dp"
+            tools:layout_editor_absoluteY="374dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
