@@ -30,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static RequestQueue requestQueue;
@@ -44,14 +43,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
-        final Button rules = (Button) findViewById(R.id.rules);
+        final Button rules = findViewById(R.id.rules);
         rules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,Pop.class));
             }
         });
-
         final Spinner spinner = findViewById(R.id.ChooseCategories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Choose_Categories, android.R.layout.simple_spinner_item);
@@ -71,13 +69,11 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(TAG, "Nothing selected");
             }
         });
-
         final Button startGame = findViewById(R.id.start);
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,19 +93,27 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                         Request.Method.GET,
-                        "https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple&encode=url3986&category=" + category,
+                        "https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986&category=" + category,
                         null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(final JSONObject response) {
                                Log.d(TAG, "Request Received:"+ response.toString());
-                                //create class objects for every question in response
-                               questions = getQuestions(response);
+                               try {
+                                   if (response.getInt("response_code") != 0) {
+                                       throw(new Exception("Results Empty, shutting down."));
+                                   } else {
+                                       //create class objects for every question in response
+                                       questions = getQuestions(response);
 
-                               //Start the question page activity.
-                                Intent questionPageIntent = new Intent(getApplicationContext(),
-                                        QuestionPageActivity.class);
-                                startActivity(questionPageIntent);
+                                       //Start the question page activity.
+                                       Intent questionPageIntent = new Intent(getApplicationContext(),
+                                               QuestionPageActivity.class);
+                                       startActivity(questionPageIntent);
+                                   }
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
                             }
                         }, new Response.ErrorListener() {
                     @Override
