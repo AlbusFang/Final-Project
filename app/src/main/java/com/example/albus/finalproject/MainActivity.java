@@ -1,4 +1,5 @@
 package com.example.albus.finalproject;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.JsonReader;
@@ -24,14 +25,18 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static RequestQueue requestQueue;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
-
+        final Button rules = (Button) findViewById(R.id.rules);
+        rules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,Pop.class));
+            }
+        });
         final Button startGame = findViewById(R.id.start);
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        Intent intent = getIntent();
+        int score = intent.getIntExtra("Score:",0);
+        TextView textView = (TextView) this.findViewById(R.id.score);
+        textView.setText("Score:  "+ String.valueOf(score));
     }
 
     /**
