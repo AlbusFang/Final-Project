@@ -1,5 +1,7 @@
 package com.example.albus.finalproject;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.JsonReader;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static String category = "none";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
@@ -58,14 +60,9 @@ public class MainActivity extends AppCompatActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Log.d(TAG, "Make Call");
+                Log.d(TAG, "Clicked Start Game");
                 makeAPICall(category);
-                setContentView(R.layout.question_page);
-                final Button answer_1 = findViewById(R.id.answer_1);
-                answer_1.setText("Correct Answer :D");
-
             }
-
         });
     }
 
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      * makes an api call, triggering the beginning of the game.
      * @param category sets the category of questions
      */
-    public static void makeAPICall(String category) {
+    public void makeAPICall(String category) {
         if (category.equals("none")) {
             try {
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -85,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(final JSONObject response) {
                                Log.d(TAG, "Request Received:"+ response.toString());
                                Question[] questions = getQuestions(response);
+                               Intent questionIntent = new Intent(getApplicationContext(),
+                                        QuestionPageActivity.class);
+                               startActivity(questionIntent);
                                //makeQuestionPage(questions);
                             }
                         }, new Response.ErrorListener() {
@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(final JSONObject response) {
                                 Log.d(TAG, response.toString());
+                                Question[] questions = getQuestions(response);
+                                Intent questionIntent = new Intent(getApplicationContext(),
+                                        QuestionPageActivity.class);
+                                startActivity(questionIntent);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -121,15 +125,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * reads and parses the return json, creating question objects for all received questions
-     *
-     * @param response the json received from api call
-     * @return an array of question objects
-     */
-    private static Question[] getQuestions(JSONObject response) {
-        Question[] questions = new Question[10];
 
     /**
      * reads and parses the return json, creating question objects for all received questions
@@ -163,13 +158,5 @@ public class MainActivity extends AppCompatActivity {
      * @param questions an array of question objects
      */
     private static void makeQuestionPage(final Question[] questions) {
-    }
-
-    /**
-     * tbd.
-     * @param questions an array of question objects
-     */
-    private static void makeQuestionPage(final Question[] questions) {
-
     }
 }
