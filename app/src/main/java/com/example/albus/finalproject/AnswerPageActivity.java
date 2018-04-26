@@ -27,10 +27,59 @@ public class AnswerPageActivity extends AppCompatActivity {
         final TextView answerText = findViewById(R.id.answerValue);
         answerText.setText(rightOrWrong);
 
+        final TextView correctAnswerView = findViewById(R.id.correctAnswer);
+        if (rightOrWrong.equals("wrong!")) {
+            correctAnswerView.setVisibility(View.VISIBLE);
+            correctAnswerView.setText("The correct answer was: "
+                    + MainActivity.questions[QuestionPageActivity.questionCount]
+                    .getCorrectAnswer());
+        }
+
+        /** Button to take the player to the next question page.
+         * If the player has arrived at the last question, they are returned to the main activity.
+         * If the last question was answered incorrectly, this button is not visible.
+         */
+        final Button nextQuestion = findViewById(R.id.nextQuestion);
+        if (rightOrWrong.equals("right!")) {
+            nextQuestion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity.currentScore++;
+                    if (MainActivity.currentScore > MainActivity.highScore) {
+                        MainActivity.highScore = MainActivity.currentScore;
+                    }
+                    if (QuestionPageActivity.questionCount == 9) {
+                        QuestionPageActivity.questionCount = 0;
+                        MainActivity.currentScore = 0;
+                        Intent returnToMainIntent = new Intent(getApplicationContext(),
+                                MainActivity.class);
+                        startActivity(returnToMainIntent);
+                    } else {
+                        QuestionPageActivity.questionCount++;
+                        Intent nextQuestionIntent = new Intent(getApplicationContext(),
+                                QuestionPageActivity.class);
+                        startActivity(nextQuestionIntent);
+                    }
+                }
+            });
+        } else {
+            nextQuestion.setVisibility(View.GONE);
+        }
+
+
         final Button returnButton = findViewById(R.id.returnToMain);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                QuestionPageActivity.questionCount = 0;
+                if (rightOrWrong.equals("right!")) {
+                    MainActivity.currentScore++;
+                    if (MainActivity.currentScore > MainActivity.highScore) {
+                        MainActivity.highScore = MainActivity.currentScore;
+                    }
+                }
+                // else display correct answer
+                MainActivity.currentScore = 0;
                 Intent returnToMainIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(returnToMainIntent);
             }

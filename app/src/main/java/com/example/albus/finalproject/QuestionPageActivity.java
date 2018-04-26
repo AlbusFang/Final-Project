@@ -24,22 +24,24 @@ import android.widget.TextView;
 
 public class QuestionPageActivity extends AppCompatActivity {
 private static final String TAG = "QuestionPageActivity";
+public static int questionCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_page);
-        final String[] answerArray = MainActivity.questions[0].shuffleAnswers();
+        final String[] answerArray = MainActivity.questions[questionCount].shuffleAnswers();
 
         final TextView questionView = findViewById(R.id.question_view);
-        questionView.setText(MainActivity.questions[0].getQuestion());
+        questionView.setText(MainActivity.questions[questionCount].getQuestion());
 
         final Button answer_1 = findViewById(R.id.answer_1);
         answer_1.setText(answerArray[0]);
         answer_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerArray[0].equals(MainActivity.questions[0].getCorrectAnswer())) {
+                if (answerArray[0].equals(MainActivity.questions[questionCount]
+                        .getCorrectAnswer())) {
                     AnswerPageActivity.rightOrWrong = "right!";
                 } else {
                     AnswerPageActivity.rightOrWrong = "wrong!";
@@ -55,7 +57,8 @@ private static final String TAG = "QuestionPageActivity";
         answer_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerArray[1].equals(MainActivity.questions[0].getCorrectAnswer())) {
+                if (answerArray[1].equals(MainActivity.questions[questionCount]
+                        .getCorrectAnswer())) {
                     AnswerPageActivity.rightOrWrong = "right!";
                 } else {
                     AnswerPageActivity.rightOrWrong = "wrong!";
@@ -70,7 +73,8 @@ private static final String TAG = "QuestionPageActivity";
         answer_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerArray[2].equals(MainActivity.questions[0].getCorrectAnswer())) {
+                if (answerArray[2].equals(MainActivity.questions[questionCount]
+                        .getCorrectAnswer())) {
                     AnswerPageActivity.rightOrWrong = "right!";
                 } else {
                     AnswerPageActivity.rightOrWrong = "wrong!";
@@ -85,7 +89,8 @@ private static final String TAG = "QuestionPageActivity";
         answer_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerArray[3].equals(MainActivity.questions[0].getCorrectAnswer())) {
+                if (answerArray[3].equals(MainActivity.questions[questionCount]
+                        .getCorrectAnswer())) {
                     AnswerPageActivity.rightOrWrong = "right!";
                 } else {
                     AnswerPageActivity.rightOrWrong = "wrong!";

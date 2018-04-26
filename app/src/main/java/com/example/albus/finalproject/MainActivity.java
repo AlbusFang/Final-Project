@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private static Hashtable<String,Integer> categories = new Hashtable<>(); //maps category strings to their ids
     private static int category; //we need the category to be the matching id number
     public static Question[] questions;
+    public static int currentScore = 0;
+    public static int highScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
+
+        final TextView highScoreView = findViewById(R.id.highScoreTextView);
+        highScoreView.setText("" + highScore);
 
         final Spinner spinner = findViewById(R.id.ChooseCategories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
