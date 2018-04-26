@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static RequestQueue requestQueue;
-    private static Hashtable<String,Integer> categories = new Hashtable<>(); //this allows us to keep the categories and their ids in one place yay
+    private static Hashtable<String,Integer> categories = new Hashtable<>(); //maps category strings to their ids
     private static int category; //we need the category to be the matching id number
     private static Question[] questions;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     String temp = parent.getItemAtPosition(position).toString(); //gets string from spinner
-                    if (temp.equalsIgnoreCase("Choose a category") || temp.equalsIgnoreCase("miscellaneous")) {
+                    if (temp.equalsIgnoreCase("Choose a category")) {
                         temp = "General Knowledge"; //this is the key for the random category
                     }
                     category = categories.get(temp); //get id number from hashtable
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * i didn't know how to do this any other way. There is probably a better way to initialize the map but idk.
+     * also im sorry the ids are out of order, im an inherently lazy person :).
      */
     private static void buildMap() {
         categories.put("General Knowledge",9);
@@ -162,5 +163,22 @@ public class MainActivity extends AppCompatActivity {
         categories.put("Science: Computer",18);
         categories.put("Science: Math",19);
         categories.put("Vehicle",28);
+        categories.put("Entertainment: Musicals and Theatres", 13);
+        categories.put("Entertainment: Television", 14);
+        categories.put("Entertainment: Video Games", 15);
+        categories.put("Entertainment: Board Games", 16);
+        categories.put("Science and Nature", 17);
+        categories.put("Mythology", 20);
+        categories.put("Sports", 21);
+        categories.put("Geography", 22);
+        categories.put("History", 23);
+        categories.put("Politics", 24);
+        categories.put("Art", 25);
+        categories.put("Celebrities", 26);
+        categories.put("Animals", 27);
+        categories.put("Entertainment: Comics", 29);
+        categories.put("Science: Gadgets", 30);
+        categories.put("Entertainment: Japanese Anime and Manga", 31);
+        categories.put("Entertainment: Cartoon and Animations", 32);
     }
 }
