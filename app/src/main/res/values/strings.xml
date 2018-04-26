@@ -2,11 +2,28 @@
     <string name="app_name">Final project</string>
     <string-array name="Choose_Categories">
         <item>Choose Your Category</item>
-        <item>Miscellaneous</item>
-        <item>Entertainment: Books</item>
-        <item>Entertainment: Music</item>
+        <item>General Knowledge</item>
+        <item>Vehicle</item>
+        <item>Science and Nature</item>
+        <item>Mythology</item>
+        <item>Sports</item>
+        <item>Geography</item>
+        <item>History</item>
+        <item>Politics</item>
+        <item>Art</item>
+        <item>Celebrities</item>
+        <item>Animals</item>
         <item>Science: Computer</item>
         <item>Science: Math</item>
-        <item>Vehicle</item>
+        <item>Science: Gadgets</item>
+        <item>Entertainment: Books</item>
+        <item>Entertainment: Music</item>
+        <item>Entertainment: Comics</item>
+        <item>Entertainment: Musicals and Theatres</item>
+        <item>Entertainment: Television</item>
+        <item>Entertainment: Video Games</item>
+        <item>Entertainment: Board Games</item>
+        <item>Entertainment: Japanese Anime and Manga</item>
+        <item>Entertainment: Cartoon and Animations</item>
     </string-array>
 </resources>
