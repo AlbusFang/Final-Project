@@ -27,4 +27,9 @@
         <item>Entertainment: Japanese Anime and Manga</item>
         <item>Entertainment: Cartoon and Animations</item>
     </string-array>
+    <string name="rules">
+        ---(Click and drag to scroll)---
+        Each game contains up to 10 questions. If you answer incorrectly, the game ends.
+        Good luck, and thanks for playing!
+    </string>
 </resources>

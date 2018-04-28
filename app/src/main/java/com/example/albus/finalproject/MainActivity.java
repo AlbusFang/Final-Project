@@ -5,13 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ArrowKeyMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static Question[] questions;
     public static int currentScore = 0;
     public static int highScore = 0;
+    private int findB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +62,22 @@ public class MainActivity extends AppCompatActivity {
         rules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Pop.class));
+                final TextView ruleText = findViewById(R.id.ruleText);
+                ruleText.setText(R.string.rules);
+                ruleText.setMovementMethod(new ScrollingMovementMethod());
+                ruleText.setVisibility(View.VISIBLE);
+                final ImageButton closeRules = findViewById(R.id.closeRules);
+                closeRules.setVisibility(View.VISIBLE);
+                closeRules.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ruleText.setVisibility(View.GONE);
+                        closeRules.setVisibility(View.GONE);
+                    }
+                });
             }
         });
+
         final Spinner spinner = findViewById(R.id.ChooseCategories);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Choose_Categories, android.R.layout.simple_spinner_item);
@@ -90,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
 
     /**
      * makes an api call, triggering the beginning of the game.
